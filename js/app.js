@@ -18,25 +18,12 @@ $("#removeOption:selected").css("display", "none");
 $("#design").on("change", e => {
   //need to find a way to make sure first click is one or the other design
   if (e.target.value === "js puns") {
-    $("#color:selected").val([]);
+    // $("#color:selected").val([]);
     console.log("jspuns");
     //load correct color for js puns
-    for (let i = 3; i < colorChildren.length; i++) {
-      const hiddenShirts = colorChildren[i];
-      $(hiddenShirts).hide();
-    }
   }
   if (e.target.value === "heart js") {
     console.log("heart js");
-    //load correct color for js puns
-    for (let i = 0; i < colorChildren.length; i++) {
-      const showShirts = colorChildren[i];
-      if (i > 2) {
-        $("#color:selected").val([]);
-        $(showShirts).show();
-      } else {
-        $(showShirts).hide();
-      }
-    }
+    //load correct color for heart js
   }
 });
