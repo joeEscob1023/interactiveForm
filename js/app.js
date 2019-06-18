@@ -7,6 +7,7 @@ const selectThemeOption = $("#design").children()[0];
 const jsPuns = $("#design").children()[1];
 const heartJs = $("#design").children()[2];
 const colorChildren = $("#color").children();
+const activities = $(".activities");
 $("button").click(e => {
   e.preventDefault();
   console.log($name.val());
@@ -18,28 +19,32 @@ $("#removeOption:selected").css("display", "none");
 $("#design").on("change", e => {
   //need to find a way to make sure first click is one or the other design
   if (e.target.value === "js puns") {
-    console.log("jspuns");
-    //load correct color for js puns
-    for (let i = 0; i < colorChildren.length; i++) {
-      if (i <= 2) {
-        $(colorChildren[i]).show();
+    // show correct colors for "heart js"
+    colorChildren.each(function(i) {
+      if (i < 3) {
+        $(this).show();
+      } else {
+        $(this).hide();
       }
-      if (i > 2) {
-        $(colorChildren[i]).hide();
-      }
-    }
+    });
+    // AND pick one as a default selection
+    $("#color").val("cornflowerblue");
   }
   if (e.target.value === "heart js") {
-    //find way to make Cornflower Blue for JS PUNS options go away if heart js is clicked as the design option.
-    console.log("heart js");
     //load correct color for heart js
-    for (let i = 0; i < colorChildren.length; i++) {
+    // show correct colors for "heart js"
+    colorChildren.each(function(i) {
       if (i > 2) {
-        $(colorChildren[i]).show();
+        $(this).show();
+      } else {
+        $(this).hide();
       }
-      if (i <= 2) {
-        $(colorChildren[i]).hide();
-      }
-    }
+    });
+    // AND pick one as a default selection
+    $("#color").val("tomato");
   }
 });
+
+$(activities).append("oink");
+//create the value for each check box and then add it to the page
+//Cant check boxes if time interferes with selected checkbox
