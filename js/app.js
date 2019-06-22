@@ -8,6 +8,8 @@ const jsPuns = $("#design").children()[1];
 const heartJs = $("#design").children()[2];
 const colorChildren = $("#color").children();
 const activities = $(".activities");
+const activityInputs = activities.children();
+let activityCost = 0;
 $("button").click(e => {
   e.preventDefault();
   console.log($name.val());
@@ -45,6 +47,14 @@ $("#design").on("change", e => {
   }
 });
 
-$(activities).append("oink");
+$(activities).append(activityCost);
+
+$(activities).change(e => {
+  let inputs = $(e.target)
+    .parent()
+    .text();
+  const indexOfDollarSign = inputs.indexOf("$");
+  console.log(indexOfDollarSign);
+});
 //create the value for each check box and then add it to the page
 //Cant check boxes if time interferes with selected checkbox
