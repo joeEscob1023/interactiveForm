@@ -9,7 +9,7 @@ const heartJs = $("#design").children()[2];
 const colorChildren = $("#color").children();
 const activities = $(".activities");
 const activityInputs = activities.children();
-let activityCost = 0;
+let startingCost = 0;
 $("button").click(e => {
   e.preventDefault();
   console.log($name.val());
@@ -46,15 +46,30 @@ $("#design").on("change", e => {
     $("#color").val("tomato");
   }
 });
-
-$(activities).append(activityCost);
+$(activities).append(0);
 
 $(activities).change(e => {
   let inputs = $(e.target)
     .parent()
     .text();
   const indexOfDollarSign = inputs.indexOf("$");
-  console.log(indexOfDollarSign);
+  let price = parseFloat(inputs.slice(indexOfDollarSign + 1));
+
+  if (e.target.checked === true) {
+    startingCost = startingCost + price;
+  } else if (e.target.checked === false) {
+    startingCost = startingCost - price;
+  }
+  $(activities).append(startingCost);
 });
+
+// $(activities).change(e => {
+//   let inputs = $(e.target)
+//     .parent()
+//     .text();
+//   const indexOfDollarSign = inputs.indexOf("$");
+//   let price = parseFloat(inputs.slice(indexOfDollarSign + 1));
+//   let totalCost = (startingCost += price);
+// });
 //create the value for each check box and then add it to the page
 //Cant check boxes if time interferes with selected checkbox
