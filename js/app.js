@@ -60,16 +60,11 @@ $(activities).change(e => {
   } else if (e.target.checked === false) {
     startingCost = startingCost - price;
   }
-  $(activities).append(startingCost);
+  /*A new price keeps appending itself from the current price.
+  ex: if the starting price is at 0, the new price if its 200 and then 300 will be..
+  0200300 so on.
+  */
 });
 
-// $(activities).change(e => {
-//   let inputs = $(e.target)
-//     .parent()
-//     .text();
-//   const indexOfDollarSign = inputs.indexOf("$");
-//   let price = parseFloat(inputs.slice(indexOfDollarSign + 1));
-//   let totalCost = (startingCost += price);
-// });
 //create the value for each check box and then add it to the page
 //Cant check boxes if time interferes with selected checkbox
