@@ -46,7 +46,8 @@ $("#design").on("change", e => {
     $("#color").val("tomato");
   }
 });
-$(activities).append(0);
+
+activities.append('<span id="total">$0</span>');
 
 $(activities).change(e => {
   let inputs = $(e.target)
@@ -57,13 +58,12 @@ $(activities).change(e => {
 
   if (e.target.checked === true) {
     startingCost = startingCost + price;
+    console.log(startingCost);
   } else if (e.target.checked === false) {
     startingCost = startingCost - price;
+    console.log(startingCost);
   }
-  /*A new price keeps appending itself from the current price.
-  ex: if the starting price is at 0, the new price if its 200 and then 300 will be..
-  0200300 so on.
-  */
+  $("#total").text(`$${startingCost}`);
 });
 
 //create the value for each check box and then add it to the page
