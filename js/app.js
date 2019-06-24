@@ -50,11 +50,11 @@ $("#design").on("change", e => {
 activities.append('<span id="total">$0</span>');
 
 $(activities).change(e => {
-  let inputs = $(e.target)
+  let activityString = $(e.target)
     .parent()
     .text();
-  const indexOfDollarSign = inputs.indexOf("$");
-  let price = parseFloat(inputs.slice(indexOfDollarSign + 1));
+  const indexOfDollarSign = activityString.indexOf("$");
+  let price = parseFloat(activityString.slice(indexOfDollarSign + 1));
 
   if (e.target.checked === true) {
     startingCost = startingCost + price;
