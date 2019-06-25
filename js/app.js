@@ -8,7 +8,7 @@ const jsPuns = $("#design").children()[1];
 const heartJs = $("#design").children()[2];
 const colorChildren = $("#color").children();
 const activities = $(".activities");
-const activityInputs = activities.children();
+const activityInputs = activities.children().children();
 let startingCost = 0;
 $("button").click(e => {
   e.preventDefault();
@@ -50,21 +50,36 @@ $("#design").on("change", e => {
 activities.append('<span id="total">$0</span>');
 
 $(activities).change(e => {
+  //To get dollar sign
   let activityString = $(e.target)
     .parent()
     .text();
   const indexOfDollarSign = activityString.indexOf("$");
   let price = parseFloat(activityString.slice(indexOfDollarSign + 1));
+  //To get Date and time of event
+  const indexOfDash = activityString.indexOf("—");
+  const indexOfComa = activityString.indexOf(",");
+  console.log(indexOfDash, indexOfComa);
+  const dateAndTime = activityString.slice(indexOfDash, indexOfComa);
+  console.log(dateAndTime);
 
   if (e.target.checked === true) {
     startingCost = startingCost + price;
-    console.log(startingCost);
   } else if (e.target.checked === false) {
     startingCost = startingCost - price;
-    console.log(startingCost);
   }
   $("#total").text(`$${startingCost}`);
+
+  for (let i = 1; i < activityInputs.length; i++) {
+    let input = activityInputs[i];
+    if (input.contains(dateAndTime)) {
+      console.log(true);
+    }
+  }
 });
+
+//Find a way to make sure user cant check events that have the same time.
+//If an event has the same time frame, disable checkbox and line through
 
 //create the value for each check box and then add it to the page
 //Cant check boxes if time interferes with selected checkbox
