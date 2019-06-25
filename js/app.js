@@ -71,6 +71,14 @@ $(activities).change(e => {
   $("#total").text(`$${startingCost}`);
 
   for (let i = 1; i < activityInputs.length; i++) {
+    /*
+      find a way to filter out other events that share the same day and time of event user clicks
+
+      Find which method works.
+
+      Current code throws error:
+      Failed to execute 'contains' on 'Node': parameter 1 is not of type 'Node'.
+    */
     let input = activityInputs[i];
     if (input.contains(dateAndTime)) {
       console.log(true);
