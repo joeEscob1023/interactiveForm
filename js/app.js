@@ -72,10 +72,13 @@ $(activities).change(e => {
 
   console.log(activityString); //gives me the whole string
   console.log(dateAndTime); //gives me the part of the string where its the day and time of event
-
+  if (activityString.includes(dateAndTime)) {
+    console.log(true);
+  } else {
+    console.log(false);
+  }
   for (let i = 0; i < checkboxes.length; i++) {
-    //need to loop through checkbox
-    //checkboxes[i]
+    console.log();
   }
 });
 
