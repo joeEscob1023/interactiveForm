@@ -9,7 +9,7 @@ const heartJs = $("#design").children()[2];
 const colorChildren = $("#color").children();
 const activities = $(".activities");
 const checkboxes = $(":checkbox");
-console.log(checkboxes);
+console.log("TCL: checkboxes", checkboxes);
 
 let startingCost = 0;
 $("button").click(e => {
@@ -50,9 +50,8 @@ $("#design").on("change", e => {
 });
 
 activities.append('<span id="total">$0</span>');
-
-$(activities).change(e => {
-  //To get dollar sign
+let chosenArr = [];
+$(checkboxes).change(function(e) {
   let activityString = $(e.target)
     .parent()
     .text();
@@ -62,24 +61,23 @@ $(activities).change(e => {
   const indexOfDash = activityString.indexOf("—");
   const indexOfComa = activityString.indexOf(",");
   const dateAndTime = activityString.slice(indexOfDash, indexOfComa);
+  let parsedDate = dateAndTime.split(/\s+/);
+  parsedDate = parsedDate.join(" ");
+  console.log("TCL: parsedDate", parsedDate);
 
-  if (e.target.checked === true) {
-    startingCost = startingCost + price;
-  } else if (e.target.checked === false) {
-    startingCost = startingCost - price;
+  if ($(this).is(":checked") === false) {
+    var index = chosenArr.indexOf(parsedDate);
+    if (index > -1) {
+      chosenArr.splice(index, 1);
+    }
+    return;
   }
-  $("#total").text(`$${startingCost}`);
 
-  console.log(activityString); //gives me the whole string
-  console.log(dateAndTime); //gives me the part of the string where its the day and time of event
-  if (activityString.includes(dateAndTime)) {
-    console.log(true);
-  } else {
-    console.log(false);
+  if (chosenArr.includes(parsedDate)) {
+    $(e.target).prop("checked", false);
+    return;
   }
-  for (let i = 0; i < checkboxes.length; i++) {
-    console.log();
-  }
+  chosenArr.push(parsedDate);
 });
 
 //Find a way to make sure user cant check events that have the same time.
