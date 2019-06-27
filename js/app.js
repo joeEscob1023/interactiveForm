@@ -8,7 +8,9 @@ const jsPuns = $("#design").children()[1];
 const heartJs = $("#design").children()[2];
 const colorChildren = $("#color").children();
 const activities = $(".activities");
-const activityInputs = activities.children().children();
+const checkboxes = $(":checkbox");
+console.log(checkboxes);
+
 let startingCost = 0;
 $("button").click(e => {
   e.preventDefault();
@@ -59,9 +61,7 @@ $(activities).change(e => {
   //To get Date and time of event
   const indexOfDash = activityString.indexOf("—");
   const indexOfComa = activityString.indexOf(",");
-  console.log(indexOfDash, indexOfComa);
   const dateAndTime = activityString.slice(indexOfDash, indexOfComa);
-  console.log(dateAndTime);
 
   if (e.target.checked === true) {
     startingCost = startingCost + price;
@@ -70,19 +70,12 @@ $(activities).change(e => {
   }
   $("#total").text(`$${startingCost}`);
 
-  for (let i = 1; i < activityInputs.length; i++) {
-    /*
-      find a way to filter out other events that share the same day and time of event user clicks
+  console.log(activityString); //gives me the whole string
+  console.log(dateAndTime); //gives me the part of the string where its the day and time of event
 
-      Find which method works.
-
-      Current code throws error:
-      Failed to execute 'contains' on 'Node': parameter 1 is not of type 'Node'.
-    */
-    let input = activityInputs[i];
-    if (input.contains(dateAndTime)) {
-      console.log(true);
-    }
+  for (let i = 0; i < checkboxes.length; i++) {
+    //need to loop through checkbox
+    //checkboxes[i]
   }
 });
 
