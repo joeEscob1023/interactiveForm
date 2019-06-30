@@ -9,7 +9,7 @@ const heartJs = $("#design").children()[2];
 const colorChildren = $("#color").children();
 const activities = $(".activities");
 const checkboxes = $(":checkbox");
-console.log(checkboxes);
+console.log("TCL: checkboxes", checkboxes);
 
 let startingCost = 0;
 $("button").click(e => {
@@ -51,7 +51,8 @@ $("#design").on("change", e => {
 
 activities.append('<span id="total">$0</span>');
 
-$(activities).change(e => {
+let chosenArr = [];
+$(checkboxes).change(e => {
   //To get dollar sign
   let activityString = $(e.target)
     .parent()
@@ -62,6 +63,9 @@ $(activities).change(e => {
   const indexOfDash = activityString.indexOf("—");
   const indexOfComa = activityString.indexOf(",");
   const dateAndTime = activityString.slice(indexOfDash, indexOfComa);
+  let parsedDate = dateAndTime.split(/\s+/);
+  parsedDate = parsedDate.join(" ");
+  console.log("TCL: parsedDate", parsedDate);
 
   if (e.target.checked === true) {
     startingCost = startingCost + price;
@@ -70,16 +74,33 @@ $(activities).change(e => {
   }
   $("#total").text(`$${startingCost}`);
 
-  console.log(activityString); //gives me the whole string
-  console.log(dateAndTime); //gives me the part of the string where its the day and time of event
-  if (activityString.includes(dateAndTime)) {
-    console.log(true);
-  } else {
-    console.log(false);
+  // if ($(this).is(":checked") === true) {
+  //   console.log(this);
+  //   let index = chosenArr.indexOf(parsedDate);
+  //   console.log(index);
+  //   if (index > -1) {
+  //     chosenArr.splice(index, 1);
+  //     console.log(chosenArr);
+  //   }
+  //   return;
+  // }
+
+  /*
+  This is return true if the strings share the same day and time, but only if the second box is clicked, i cant figure out how to use a for loop to see if a check box is clicked, to loop through all of the other inputs and if it has the same day and time, to disable it and put a line through.
+
+  The code below doesnt work. it will respond true in the console, but it wont run the css code for whatever reason.
+
+  I've tried a few things and I still cant get it to work.
+
+  */
+  if (chosenArr.includes(parsedDate)) {
+    if (true) {
+      $(e.target).css("text-decoration", "line-through");
+    }
+    return;
   }
-  for (let i = 0; i < checkboxes.length; i++) {
-    console.log();
-  }
+
+  chosenArr.push(parsedDate);
 });
 
 //Find a way to make sure user cant check events that have the same time.
