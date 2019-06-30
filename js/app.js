@@ -65,7 +65,7 @@ $(checkboxes).change(e => {
   const dateAndTime = activityString.slice(indexOfDash, indexOfComa);
   let parsedDate = dateAndTime.split(/\s+/);
   parsedDate = parsedDate.join(" ");
-  console.log("TCL: parsedDate", parsedDate);
+  console.log(" parsedDate", parsedDate);
 
   if (e.target.checked === true) {
     startingCost = startingCost + price;
@@ -112,14 +112,19 @@ $(checkboxes).change(e => {
 
   https://drive.google.com/file/d/1Vw658-9KUiUZ5yHaABvkytC9W2QBYiW_/view
   */
-  if (chosenArr.includes(parsedDate)) {
-    console.log(chosenArr);
-    console.log(parsedDate);
-    console.log(true);
-    return;
-  } else {
-    console.log(false);
-  }
 
-  chosenArr.push(parsedDate);
+  //UPDATE: I can disable the selected event, but thats not really what I want :(
+  if ($(e.target).is(":checked") === true) {
+    $(e.target).prop("disabled", true);
+  }
+  // if (chosenArr.includes(parsedDate)) {
+  //   console.log(true);
+  //   return;
+  // } else {
+  //   console.log(false);
+  // }
+
+  // chosenArr.push(parsedDate);
+  // console.log(chosenArr);
+  // console.log(parsedDate);
 });
