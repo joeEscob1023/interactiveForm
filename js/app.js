@@ -93,18 +93,33 @@ $(checkboxes).change(e => {
   I've tried a few things and I still cant get it to work.
 
   */
+
+  for (let i = 0; i < checkboxes.length; i++) {
+    //Loop through checkboxes with checkboxes[i]
+    //see if the selected checkbox contains the day and time
+    //if other checkbox texts contain selected day and time, disable and use css to add a line through <label> and <input>
+    /*
+    ex: if user selects activity with day Tuesday and time 9am-12pm
+    all other events with the time 9am-12pm on a Tuesday need to be disabled and put a line through.
+    */
+  }
+
+  /*
+  bottom code needs to go somewhere in loop to compare date.
+  It also needs another condition (&&) to run the condition correctly, I just dont know what it is yet.
+
+  Here is the study guide I'm using my issue starts on page 5.
+
+  https://drive.google.com/file/d/1Vw658-9KUiUZ5yHaABvkytC9W2QBYiW_/view
+  */
   if (chosenArr.includes(parsedDate)) {
-    if (true) {
-      $(e.target).css("text-decoration", "line-through");
-    }
+    console.log(chosenArr);
+    console.log(parsedDate);
+    console.log(true);
     return;
+  } else {
+    console.log(false);
   }
 
   chosenArr.push(parsedDate);
 });
-
-//Find a way to make sure user cant check events that have the same time.
-//If an event has the same time frame, disable checkbox and line through
-
-//create the value for each check box and then add it to the page
-//Cant check boxes if time interferes with selected checkbox
