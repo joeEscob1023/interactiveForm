@@ -9,7 +9,7 @@ const heartJs = $("#design").children()[2];
 const colorChildren = $("#color").children();
 const activities = $(".activities");
 const checkboxes = $(":checkbox");
-console.log("TCL: checkboxes", checkboxes);
+const labelText = checkboxes.parent().text();
 
 let startingCost = 0;
 $("button").click(e => {
@@ -95,6 +95,25 @@ $(checkboxes).change(e => {
   */
 
   for (let i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i] === e.target) {
+      return;
+    } else if (checkboxes[i].parentNode.innerText.includes(parsedDate)) {
+      if ($(e.target).is(":checked") === true) {
+        $(checkboxes[i])
+          .parent()
+          .css("text-decoration", "line-through");
+      } else {
+        $(checkboxes[i])
+          .parent()
+          .css("text-decoration", "none");
+      }
+    }
+    // if (chosenArr.includes(parsedDate)) {
+    //   console.log(true);
+    //   return;
+    // } else {
+    //   console.log(false);
+    // }
     //Loop through checkboxes with checkboxes[i]
     //see if the selected checkbox contains the day and time
     //if other checkbox texts contain selected day and time, disable and use css to add a line through <label> and <input>
@@ -113,16 +132,7 @@ $(checkboxes).change(e => {
   https://drive.google.com/file/d/1Vw658-9KUiUZ5yHaABvkytC9W2QBYiW_/view
   */
 
-  //UPDATE: I can disable the selected event, but thats not really what I want :(
-  if ($(e.target).is(":checked") === true) {
-    $(e.target).prop("disabled", true);
-  }
-  // if (chosenArr.includes(parsedDate)) {
-  //   console.log(true);
-  //   return;
-  // } else {
-  //   console.log(false);
-  // }
+  //UPDATE: I can disable the selected event, but thats not really what I want :( I'm going to need to do this ater for other checkboxes that fall on the same time frame as the user selected activity. Still have no idea what to do to iterate over the label string and make sure strings with the same time frame cant be selected by the user. Wow this is confusing.
 
   // chosenArr.push(parsedDate);
   // console.log(chosenArr);
