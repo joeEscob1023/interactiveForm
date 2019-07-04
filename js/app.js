@@ -93,3 +93,29 @@ $(checkboxes).change(e => {
     }
   }
 });
+
+const selectMethod = $('#payment option[value="select_method"]').val([]);
+const creditCard = $("#payment select")[1];
+const paypal = $("#credit-card").next();
+const bitCoin = $("#credit-card")
+  .next()
+  .next();
+selectMethod.css("display", "none");
+
+$("#payment").on("change", e => {
+  if (e.target.value === "credit card") {
+    $("#credit-card").show();
+    $(paypal).hide();
+    $(bitCoin).hide();
+  } else if (e.target.value === "paypal") {
+    $(paypal).show();
+    $("#credit-card").hide();
+    $(bitCoin).hide();
+  } else if (e.target.value === "bitcoin") {
+    $(bitCoin).show();
+    $("#credit-card").hide();
+    $(paypal).hide();
+  } else {
+    return;
+  }
+});
