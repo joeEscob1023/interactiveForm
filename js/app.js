@@ -1,6 +1,6 @@
 $("#name").focus();
 
-const $name = $("#name");
+const $name = $("#name")[0];
 const $email = $("#mail");
 const $design = $("#design");
 const selectThemeOption = $("#design").children()[0];
@@ -10,13 +10,9 @@ const colorChildren = $("#color").children();
 const activities = $(".activities");
 const checkboxes = $(":checkbox");
 const labelText = checkboxes.parent().text();
+console.log($name);
 
 let startingCost = 0;
-$("button").click(e => {
-  e.preventDefault();
-  console.log($name.val());
-  console.log($email.val());
-});
 
 $("#removeOption:selected").val([]);
 $("#removeOption:selected").css("display", "none");
@@ -73,6 +69,7 @@ $(checkboxes).change(e => {
     startingCost = startingCost - price;
   }
   $("#total").text(`$${startingCost}`);
+  console.log(startingCost);
 
   for (let i = 0; i < checkboxes.length; i++) {
     if (
@@ -118,4 +115,41 @@ $("#payment").on("change", e => {
   } else {
     return;
   }
+});
+
+//Validation functions
+function isValidName(name) {
+  return /[^a-z]+$/.test(name);
+}
+
+function isValidEmail(email) {
+  return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
+}
+
+function isValidActivity() {
+  return startingCost != 0;
+}
+
+function isValidCreditCard(cardNumber) {
+  return /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/.test(
+    cardNumber
+  );
+}
+
+function isValidZipCode(zip) {
+  return /[^\d](\d{5})[^\d]/g.test(zip);
+}
+
+function isValidCvv(cvv) {
+  return /^[0-9]{3,4}$/.test(cvv);
+}
+
+/*
+  I have my functions, now i just have to put it together,
+  I'm not so sure how I am going to do that or where to implement my validator functions
+*/
+
+//I get an error 405 and it wont submit.
+$("#button").on("submit", e => {
+  e.preventDefault();
 });
