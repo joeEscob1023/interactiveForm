@@ -149,7 +149,6 @@ function isValidCvv(cvv) {
   I'm not so sure how I am going to do that or where to implement my validator functions
 */
 
-//I get an error 405 and it wont submit.
 $("form").on("submit", e => {
   e.preventDefault();
   if ($(name).val() === "") {
