@@ -1,8 +1,8 @@
 $("#name").focus();
 
-const $name = $("#name")[0];
-const $email = $("#mail");
-const $design = $("#design");
+const name = $("#name")[0];
+const email = $("#mail");
+const design = $("#design");
 const selectThemeOption = $("#design").children()[0];
 const jsPuns = $("#design").children()[1];
 const heartJs = $("#design").children()[2];
@@ -10,7 +10,7 @@ const colorChildren = $("#color").children();
 const activities = $(".activities");
 const checkboxes = $(":checkbox");
 const labelText = checkboxes.parent().text();
-console.log($name);
+console.log(name);
 
 let startingCost = 0;
 
@@ -150,6 +150,13 @@ function isValidCvv(cvv) {
 */
 
 //I get an error 405 and it wont submit.
-$("#button").on("submit", e => {
+$("form").on("submit", e => {
   e.preventDefault();
+  if ($(name).val() === "") {
+    console.log("Please enter a name");
+    $(name).prop("required", true);
+    $(name).css("border", "solid red 1px");
+  } else {
+    console.log($(name).val());
+  }
 });
