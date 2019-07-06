@@ -1,6 +1,6 @@
 $("#name").focus();
 
-const name = $("#name")[0];
+const name = $("#name");
 const email = $("#mail");
 const design = $("#design");
 const selectThemeOption = $("#design").children()[0];
@@ -119,7 +119,7 @@ $("#payment").on("change", e => {
 
 //Validation functions
 function isValidName(name) {
-  return /[^a-z]+$/.test(name);
+  return /([A-Z])\w+/g.test(name);
 }
 
 function isValidEmail(email) {
@@ -131,13 +131,11 @@ function isValidActivity() {
 }
 
 function isValidCreditCard(cardNumber) {
-  return /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/.test(
-    cardNumber
-  );
+  return /^(\d{4}[- ]){3}\d{4}|\d{16}$/g.test(cardNumber);
 }
 
 function isValidZipCode(zip) {
-  return /[^\d](\d{5})[^\d]/g.test(zip);
+  return /^\d{5}(?:[-\s]\d{4})?$/g.test(zip);
 }
 
 function isValidCvv(cvv) {
@@ -151,11 +149,27 @@ function isValidCvv(cvv) {
 
 $("form").on("submit", e => {
   e.preventDefault();
-  if ($(name).val() === "") {
-    console.log("Please enter a name");
-    $(name).prop("required", true);
-    $(name).css("border", "solid red 1px");
-  } else {
-    console.log($(name).val());
-  }
+  let nameInput = $(name).val();
+  let emailInput = $(email).val();
+  let cardNumber = $("#cc-num").val();
+  let zipCode = $("#zip").val();
+  let cvv = $("#cvv").val();
+  console.log(zipCode);
+  console.log(cardNumber);
+
+  console.log(nameInput);
+  console.log(emailInput);
+  // if (isValidName($(name).val())) {
+  //   console.log("Please enter a name");
+  //   $(name).prop("required", true);
+  //   $(name).css("border", "solid red 1px");
+  // } else {
+  //   console.log($(name).val());
+  // }
+  console.log(isValidName(nameInput));
+  console.log(isValidEmail(emailInput));
+  console.log(isValidActivity(startingCost));
+  console.log(isValidCreditCard(cardNumber));
+  console.log(isValidZipCode(zipCode));
+  console.log(isValidCvv(cvv));
 });
