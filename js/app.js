@@ -10,7 +10,7 @@ const colorChildren = $("#color").children();
 const activities = $(".activities");
 const checkboxes = $(":checkbox");
 const labelText = checkboxes.parent().text();
-const labelForActivities = $(activities).children()[0];
+const labelForActivities = $(activities).children()[1];
 $(labelForActivities).attr("for", "activities");
 console.log(labelForActivities);
 
@@ -183,23 +183,33 @@ $("form").on("submit", e => {
   if (isValidName(nameInput)) {
     return nameInput;
   } else {
-    invalidSpans(" :Please Enter A Name", "name");
+    invalidSpans(" : Enter A Name", "name");
   }
 
   if (isValidEmail(emailInput)) {
     return emailInput;
   } else {
-    invalidSpans(" :Please Enter A Correct Email", "mail");
+    invalidSpans(" : Enter A Correct Email", "mail");
   }
   if (isValidActivity()) {
     return true;
   } else {
-    invalidSpans("Please Enter Atleast One Activity", "activitites");
+    invalidSpans(" : Enter Atleast One Activity", "activities");
   }
-  if (isValidName(nameInput)) {
-    return nameInput;
+  if (isValidCreditCard(creditCard)) {
+    return creditCard;
   } else {
-    invalidSpans("Please Enter A Name");
+    invalidSpans(" :Enter A Valid Credit Card Number", "cc-num");
+  }
+  if (isValidZipCode(zipCode)) {
+    return zipCode;
+  } else {
+    invalidSpans(" :Enter A Valid Zip Code", "zip");
+  }
+  if (isValidCvv(cvv)) {
+    return cvv;
+  } else {
+    invalidSpans(" :Enter A Valid CVV", "cvv");
   }
 
   //Can be ignored. For Testing purposes
