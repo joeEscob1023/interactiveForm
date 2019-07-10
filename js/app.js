@@ -197,8 +197,8 @@ $("form").on("submit", e => {
   } else {
     invalidSpans(" : Enter Atleast One Activity", "activities");
   }
-  if (isValidCreditCard(creditCard)) {
-    return creditCard;
+  if (isValidCreditCard(cardNumber)) {
+    return cardNumber;
   } else {
     invalidSpans(" :Enter A Valid Credit Card Number", "cc-num");
   }
