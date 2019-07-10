@@ -180,6 +180,7 @@ $("form").on("submit", e => {
   let zipCode = $("#zip").val();
   let cvv = $("#cvv").val();
 
+  //Will Refactor If statements
   if (isValidName(nameInput)) {
     return nameInput;
   } else {
