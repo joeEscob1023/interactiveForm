@@ -10,7 +10,9 @@ const colorChildren = $("#color").children();
 const activities = $(".activities");
 const checkboxes = $(":checkbox");
 const labelText = checkboxes.parent().text();
-console.log(name);
+const labelForActivities = $(activities).children()[0];
+$(labelForActivities).attr("for", "activities");
+console.log(labelForActivities);
 
 let startingCost = 0;
 
@@ -118,9 +120,9 @@ $("#payment").on("change", e => {
 });
 
 //Validation functions
-function isValidName(name) {
+const isValidName = name => {
   return /([A-Z])\w+/g.test(name);
-}
+};
 
 function isValidEmail(email) {
   return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
@@ -142,6 +144,29 @@ function isValidCvv(cvv) {
   return /^[0-9]{3,4}$/.test(cvv);
 }
 
+function masterValidator(valid, input) {
+  if (valid) {
+    $(input).css("border", "solid green 2px");
+    console.log(input);
+  } else {
+    $(input).css("border", "solid red 2px");
+  }
+}
+
+function invalidSpans(text, label) {
+  const inputLabel = $(`label[for='${label}']`);
+  console.log(inputLabel);
+  const invalidSpan = `<span class='invalid'>${text}</span>`;
+  inputLabel.append(invalidSpan);
+  $(".invalid").css("color", "red");
+  $(".invalid").show();
+  setTimeout(function() {
+    $(".invalid").hide();
+  }, 5000);
+}
+
+//invalid input spans
+
 /*
   I have my functions, now i just have to put it together,
   I'm not so sure how I am going to do that or where to implement my validator functions
@@ -154,18 +179,30 @@ $("form").on("submit", e => {
   let cardNumber = $("#cc-num").val();
   let zipCode = $("#zip").val();
   let cvv = $("#cvv").val();
-  console.log(zipCode);
-  console.log(cardNumber);
 
-  console.log(nameInput);
-  console.log(emailInput);
-  // if (isValidName($(name).val())) {
-  //   console.log("Please enter a name");
-  //   $(name).prop("required", true);
-  //   $(name).css("border", "solid red 1px");
-  // } else {
-  //   console.log($(name).val());
-  // }
+  if (isValidName(nameInput)) {
+    return nameInput;
+  } else {
+    invalidSpans(" :Please Enter A Name", "name");
+  }
+
+  if (isValidEmail(emailInput)) {
+    return emailInput;
+  } else {
+    invalidSpans(" :Please Enter A Correct Email", "mail");
+  }
+  if (isValidActivity()) {
+    return true;
+  } else {
+    invalidSpans("Please Enter Atleast One Activity", "activitites");
+  }
+  if (isValidName(nameInput)) {
+    return nameInput;
+  } else {
+    invalidSpans("Please Enter A Name");
+  }
+
+  //Can be ignored. For Testing purposes
   console.log(isValidName(nameInput));
   console.log(isValidEmail(emailInput));
   console.log(isValidActivity(startingCost));
