@@ -193,7 +193,7 @@ $("form").on("submit", e => {
   if (!isValidCvv(cvv)) {
     invalidSpans(" :Enter A Valid CVV", "cvv");
   }
-  return;
+
   //Can be ignored. For Testing purposes
   // console.log(isValidName(nameInput));
   // console.log(isValidEmail(emailInput));
