@@ -101,6 +101,19 @@ const bitCoin = $("#credit-card")
   .next();
 selectMethod.css("display", "none");
 
+//Validation functions
+const isValidName = name => {
+  return /([A-Z])\w+/g.test(name);
+};
+
+function isValidEmail(email) {
+  return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
+}
+
+function isValidActivity() {
+  return startingCost != 0;
+}
+
 $("#payment").on("change", e => {
   if (e.target.value === "credit card") {
     $("#credit-card").show();
@@ -119,19 +132,6 @@ $("#payment").on("change", e => {
   }
 });
 
-//Validation functions
-const isValidName = name => {
-  return /([A-Z])\w+/g.test(name);
-};
-
-function isValidEmail(email) {
-  return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
-}
-
-function isValidActivity() {
-  return startingCost != 0;
-}
-
 function isValidCreditCard(cardNumber) {
   return /^(\d{4}[- ]){3}\d{4}|\d{16}$/g.test(cardNumber);
 }
@@ -144,24 +144,14 @@ function isValidCvv(cvv) {
   return /^[0-9]{3,4}$/.test(cvv);
 }
 
-function masterValidator(valid, input) {
-  if (valid) {
-    $(input).css("border", "solid green 2px");
-    console.log(input);
-  } else {
-    $(input).css("border", "solid red 2px");
-  }
-}
-
 function invalidSpans(text, label) {
   const inputLabel = $(`label[for='${label}']`);
-  console.log(inputLabel);
   const invalidSpan = `<span class='invalid'>${text}</span>`;
   inputLabel.append(invalidSpan);
   $(".invalid").css("color", "red");
   $(".invalid").show();
   setTimeout(function() {
-    $(".invalid").hide();
+    $(".invalid").remove();
   }, 5000);
 }
 
@@ -181,43 +171,34 @@ $("form").on("submit", e => {
   let cvv = $("#cvv").val();
 
   //Will Refactor If statements
-  if (isValidName(nameInput)) {
-    return nameInput;
-  } else {
+  if (!isValidName(nameInput)) {
     invalidSpans(" : Enter A Name", "name");
   }
 
-  if (isValidEmail(emailInput)) {
-    return emailInput;
-  } else {
+  if (!isValidEmail(emailInput)) {
     invalidSpans(" : Enter A Correct Email", "mail");
   }
-  if (isValidActivity()) {
-    return true;
-  } else {
+
+  if (!isValidActivity()) {
     invalidSpans(" : Enter Atleast One Activity", "activities");
   }
-  if (isValidCreditCard(cardNumber)) {
-    return cardNumber;
-  } else {
+
+  if (!isValidCreditCard(cardNumber)) {
     invalidSpans(" :Enter A Valid Credit Card Number", "cc-num");
   }
-  if (isValidZipCode(zipCode)) {
-    return zipCode;
-  } else {
+
+  if (!isValidZipCode(zipCode)) {
     invalidSpans(" :Enter A Valid Zip Code", "zip");
   }
-  if (isValidCvv(cvv)) {
-    return cvv;
-  } else {
+  if (!isValidCvv(cvv)) {
     invalidSpans(" :Enter A Valid CVV", "cvv");
   }
-
+  return;
   //Can be ignored. For Testing purposes
-  console.log(isValidName(nameInput));
-  console.log(isValidEmail(emailInput));
-  console.log(isValidActivity(startingCost));
-  console.log(isValidCreditCard(cardNumber));
-  console.log(isValidZipCode(zipCode));
-  console.log(isValidCvv(cvv));
+  // console.log(isValidName(nameInput));
+  // console.log(isValidEmail(emailInput));
+  // console.log(isValidActivity(startingCost));
+  // console.log(isValidCreditCard(cardNumber));
+  // console.log(isValidZipCode(zipCode));
+  // console.log(isValidCvv(cvv));
 });
