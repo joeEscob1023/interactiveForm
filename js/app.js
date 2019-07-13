@@ -12,7 +12,6 @@ const checkboxes = $(":checkbox");
 const labelText = checkboxes.parent().text();
 const labelForActivities = $(activities).children()[1];
 $(labelForActivities).attr("for", "activities");
-console.log(labelForActivities);
 
 let startingCost = 0;
 
@@ -71,7 +70,6 @@ $(checkboxes).change(e => {
     startingCost = startingCost - price;
   }
   $("#total").text(`$${startingCost}`);
-  console.log(startingCost);
 
   for (let i = 0; i < checkboxes.length; i++) {
     if (
@@ -101,17 +99,15 @@ const bitCoin = $("#credit-card")
   .next();
 selectMethod.css("display", "none");
 
-//Validation functions
-const isValidName = name => {
-  return /([A-Z])\w+/g.test(name);
-};
-
-function isValidEmail(email) {
-  return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
-}
-
-function isValidActivity() {
-  return startingCost != 0;
+function invalidSpans(text, label) {
+  const inputLabel = $(`label[for='${label}']`);
+  const invalidSpan = `<span class='invalid'>${text}</span>`;
+  inputLabel.append(invalidSpan);
+  $(".invalid").css("color", "red");
+  $(".invalid").show();
+  setTimeout(function() {
+    $(".invalid").remove();
+  }, 5000);
 }
 
 $("#payment").on("change", e => {
@@ -132,73 +128,84 @@ $("#payment").on("change", e => {
   }
 });
 
-function isValidCreditCard(cardNumber) {
-  return /^(\d{4}[- ]){3}\d{4}|\d{16}$/g.test(cardNumber);
-}
-
-function isValidZipCode(zip) {
-  return /^\d{5}(?:[-\s]\d{4})?$/g.test(zip);
-}
-
-function isValidCvv(cvv) {
-  return /^[0-9]{3,4}$/.test(cvv);
-}
-
-function invalidSpans(text, label) {
-  const inputLabel = $(`label[for='${label}']`);
-  const invalidSpan = `<span class='invalid'>${text}</span>`;
-  inputLabel.append(invalidSpan);
-  $(".invalid").css("color", "red");
-  $(".invalid").show();
-  setTimeout(function() {
-    $(".invalid").remove();
-  }, 5000);
-}
-
-//invalid input spans
-
 /*
   I have my functions, now i just have to put it together,
   I'm not so sure how I am going to do that or where to implement my validator functions
 */
 
-$("form").on("submit", e => {
-  e.preventDefault();
-  let nameInput = $(name).val();
-  let emailInput = $(email).val();
-  let cardNumber = $("#cc-num").val();
-  let zipCode = $("#zip").val();
-  let cvv = $("#cvv").val();
+$('button[type="submit"]').on("click", e => {
+  let success = true;
+  success *= isValidName();
+  success *= isValidEmail();
+  success *= isValidActivity();
+  success *= isValidCreditCard();
+  success *= isValidZipCode();
+  success *= isValidCvv();
 
-  //Will Refactor If statements
-  if (!isValidName(nameInput)) {
-    invalidSpans(" : Enter A Name", "name");
+  if (!success) {
+    e.preventDefault();
   }
-
-  if (!isValidEmail(emailInput)) {
-    invalidSpans(" : Enter A Correct Email", "mail");
-  }
-
-  if (!isValidActivity()) {
-    invalidSpans(" : Enter Atleast One Activity", "activities");
-  }
-
-  if (!isValidCreditCard(cardNumber)) {
-    invalidSpans(" :Enter A Valid Credit Card Number", "cc-num");
-  }
-
-  if (!isValidZipCode(zipCode)) {
-    invalidSpans(" :Enter A Valid Zip Code", "zip");
-  }
-  if (!isValidCvv(cvv)) {
-    invalidSpans(" :Enter A Valid CVV", "cvv");
-  }
-
-  //Can be ignored. For Testing purposes
-  // console.log(isValidName(nameInput));
-  // console.log(isValidEmail(emailInput));
-  // console.log(isValidActivity(startingCost));
-  // console.log(isValidCreditCard(cardNumber));
-  // console.log(isValidZipCode(zipCode));
-  // console.log(isValidCvv(cvv));
 });
+
+//Validation functions
+const isValidName = () => {
+  let result = /([a-z])\w+/g.test($("#name").val());
+
+  if (!result) {
+    invalidSpans(":Enter A Valid Name", "name");
+  }
+  return result;
+};
+
+function isValidEmail() {
+  let result = /^[^@]+@[^@.]+\.[a-z]+$/i.test($("#mail").val());
+  if (!result) {
+    invalidSpans(":Enter A Valid Email", "mail");
+  }
+  return result;
+}
+
+function isValidActivity() {
+  if ($("form input:checkbox:checked").length > 0) {
+    return true;
+  } else {
+    invalidSpans(":Enter Atleast One Activity", "activities");
+    return false;
+  }
+}
+
+function isValidCreditCard() {
+  if ($("#payment").val() === "credid card") {
+    let result = /^\d{13,16}$/g.test($("#cc-num").val());
+    if (!result) {
+      invalidSpans(":Enter A Valid CC number", "cc-num");
+    } else {
+      return true;
+    }
+  }
+  return true;
+}
+
+function isValidZipCode() {
+  if ($("#payment").val() === "credit card") {
+    let result = /^\d{5}(?:[-\s]\d{4})?$/g.test($("#zip").val());
+    if (!result) {
+      invalidSpans(":Enter A Valid Zip", "zip");
+    } else {
+      return true;
+    }
+  }
+  return true;
+}
+
+function isValidCvv() {
+  if ($("#payment").val() === "credid card") {
+    let result = /^[0-9]{3,4}$/.test($("#cvv").val());
+    if (!result) {
+      invalidSpans(": Enter A Valid CVV", "cvv");
+    } else {
+      return true;
+    }
+  }
+  return true;
+}
