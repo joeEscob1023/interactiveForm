@@ -1,3 +1,7 @@
+/*
+  For some reason doesnt submit when running with the liver server plug in. I am not sure why so try and avoid that. If you load it from the file system and open it with chrome, it works just fine.
+*/
+
 $("#name").focus();
 
 const name = $("#name");
@@ -20,7 +24,7 @@ let startingCost = 0;
 $("#removeOption:selected").val([]);
 $("#removeOption:selected").css("display", "none");
 $("#design").on("change", e => {
-  //need to find a way to make sure first click is one or the other design
+  //
   if (e.target.value === "js puns") {
     // show correct colors for "heart js"
     colorChildren.each(function(i) {
@@ -30,7 +34,6 @@ $("#design").on("change", e => {
         $(this).hide();
       }
     });
-    // AND pick one as a default selection
     $("#color").val("cornflowerblue");
   }
   if (e.target.value === "heart js") {
@@ -64,8 +67,8 @@ $(checkboxes).change(e => {
   const dateAndTime = activityString.slice(indexOfDash, indexOfComa);
   let parsedDate = dateAndTime.split(/\s+/);
   parsedDate = parsedDate.join(" ");
-  console.log(" parsedDate", parsedDate);
 
+  //Get total price of user activities
   if (e.target.checked === true) {
     startingCost = startingCost + price;
   } else if (e.target.checked === false) {
@@ -73,6 +76,7 @@ $(checkboxes).change(e => {
   }
   $("#total").text(`$${startingCost}`);
 
+  //Makes sure user can go to to events that are the same day and time
   for (let i = 0; i < checkboxes.length; i++) {
     if (
       checkboxes[i] !== e.target &&
@@ -101,6 +105,9 @@ const bitCoin = $("#credit-card")
   .next();
 selectMethod.css("display", "none");
 
+/* 
+  This function will run an error message if the correct validation isnt inputed and then disappear after 5 seconds
+*/
 function invalidSpans(text, label) {
   const inputLabel = $(`label[for='${label}']`);
   const invalidSpan = `<span class='invalid'>${text}</span>`;
@@ -112,6 +119,7 @@ function invalidSpans(text, label) {
   }, 5000);
 }
 
+//Payment options
 $("#payment").on("change", e => {
   if (e.target.value === "credit card") {
     $("#credit-card").show();
@@ -130,11 +138,8 @@ $("#payment").on("change", e => {
   }
 });
 
-/*
-  I have my functions, now i just have to put it together,
-  I'm not so sure how I am going to do that or where to implement my validator functions
-*/
-
+//Submittion
+//Again, doesnt work with live server plug in, open with chrome through file system
 $('button[type="submit"]').on("click", e => {
   let success = true;
   success *= isValidName();
