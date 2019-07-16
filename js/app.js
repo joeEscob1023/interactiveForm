@@ -11,6 +11,8 @@ const activities = $(".activities");
 const checkboxes = $(":checkbox");
 const labelText = checkboxes.parent().text();
 const labelForActivities = $(activities).children()[1];
+const otherJob = $("#other-title");
+otherJob.hide();
 $(labelForActivities).attr("for", "activities");
 
 let startingCost = 0;
@@ -149,7 +151,7 @@ $('button[type="submit"]').on("click", e => {
 
 //Validation functions
 const isValidName = () => {
-  let result = /([a-z])\w+/g.test($("#name").val());
+  let result = /([a-z])\w+/i.test($("#name").val());
 
   if (!result) {
     invalidSpans(":Enter A Valid Name", "name");
@@ -176,21 +178,23 @@ function isValidActivity() {
 
 function isValidCreditCard() {
   if ($("#payment").val() === "credid card") {
-    let result = /^\d{13,16}$/g.test($("#cc-num").val());
+    let result = /^\d{13,16}$/.test($("#cc-num").val());
     if (!result) {
       invalidSpans(":Enter A Valid CC number", "cc-num");
     } else {
       return true;
     }
+    return false;
   }
   return true;
 }
 
 function isValidZipCode() {
   if ($("#payment").val() === "credit card") {
-    let result = /^\d{5}(?:[-\s]\d{4})?$/g.test($("#zip").val());
+    let result = /^\d{5}$/.test($("#zip").val());
     if (!result) {
       invalidSpans(":Enter A Valid Zip", "zip");
+      return false;
     } else {
       return true;
     }
@@ -203,6 +207,7 @@ function isValidCvv() {
     let result = /^[0-9]{3,4}$/.test($("#cvv").val());
     if (!result) {
       invalidSpans(": Enter A Valid CVV", "cvv");
+      return false;
     } else {
       return true;
     }
